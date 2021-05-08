@@ -1,0 +1,26 @@
+select so.ps_ra as JT_ra, so.ps_dec as JT_dec, so.index_JTfile as index_JTfile, so.class, so.star_class, o.ObjID as PS1_ObjID,ot.raMean as ps_ra,ot.decMean as ps_dec,
+o.gMeanPSFMag, o.gMeanPSFMagErr, o.gMeanKronMag, o.gMeanApMag,
+o.rMeanPSFMag, o.rMeanPSFMagErr, o.rMeanKronMag, o.rMeanApMag,
+o.iMeanPSFMag, o.iMeanPSFMagErr, o.iMeanKronMag, o.iMeanApMag,
+o.zMeanPSFMag, o.zMeanPSFMagErr, o.zMeanKronMag, o.zMeanApMag,
+o.yMeanPSFMag, o.yMeanPSFMagErr, o.yMeanKronMag, o.yMeanApMag,
+o.gMeanPSFmagNpt,o.rMeanPSFmagNpt,o.iMeanPSFmagNpt,o.zMeanPSFmagNpt
+,o.yMeanPSFmagNpt,
+o.gFlags, o.gQfPerfect,
+o.rFlags, o.rQfPerfect,
+o.iFlags, o.iQfPerfect,
+o.zFlags, o.zQfPerfect,
+o.yFlags, o.yQfPerfect,
+s.gPSFMag as gPSFStackMag, s.gPSFMagErr as gPSFStackMagErr, s.rPSFMag as rPSFStackMag, s.rPSFMagErr as rPSFStackMagErr,s.iPSFMag as iPSFStackMag, 
+s.iPSFMagErr as iPSFStackMagErr,s.zPSFMag as zPSFStackMag, s.zPSFMagErr as zPSFStackMagErr, s.yPSFMag as yPSFStackMag, s.yPSFMagErr as yPSFStackMagErr,
+s.iApMag, s.iKronMag,s.zApMag, s.zKronMag,s.yApMag, s.yKronMag,
+s.iinfoFlag, s.iinfoFlag2,s.primaryDetection 
+
+
+into MyDB.JT_stars_crossmatched
+from MyDB.JT_stars so
+cross apply fGetNearestObjEq(so.ps_ra,so.ps_dec,2.0/60.0) nb
+inner join ObjectThin ot on ot.objid=nb.objid
+left join StackObjectThin s on ot.objID = s.objID and s.primaryDetection =1
+left join MeanObject o on o.ObjID=ot.ObjId
+LEFT JOIN StackPetrosian AS sp ON sp.objID = ot.objID
