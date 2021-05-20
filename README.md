@@ -1,6 +1,6 @@
 # High-Redshift-Quasars-with-Random-Forests
 
-Code underlying the work Wenzl et al. 2021 (LINK to arxiv and ads)
+Code underlying the work Wenzl et al. 2021 (https://arxiv.org/abs/2105.09171)
 
 Large files are removed. All the catalog data is publicly available from the different observatories or by contacting me (Lukas Wenzl). To rerun the code from scratch a few hundret GByte of RAM are necessary otherwise adaptations are needed.
 
